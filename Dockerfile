@@ -1,7 +1,7 @@
 FROM golang:1.25.3-alpine
 
 # Устанавливаем рабочую директорию
-WORKDIR /reviwers
+WORKDIR /reviewers
 
 # Копируем файлы зависимостей
 COPY go.mod go.sum ./
@@ -11,10 +11,10 @@ RUN go mod download
 COPY . .
 
 # Переходим в директорию с main.go и собираем приложение
-RUN cd cmd/app && go build -o reviwers .
+RUN cd cmd/app && go build -o reviewers .
 
 # Открываем порт
 EXPOSE 8080
 
 # Запускаем приложение
-CMD ["./cmd/app/reviwers"]
+CMD ["./cmd/app/reviewers"]
