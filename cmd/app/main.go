@@ -2,6 +2,7 @@ package main
 
 import (
 	"avito-reviewer/internal/config"
+	build "avito-reviewer/internal/handlers/build_router"
 	pull_request_handler "avito-reviewer/internal/handlers/pullRequest"
 	teamhand "avito-reviewer/internal/handlers/team_handler"
 	userhand "avito-reviewer/internal/handlers/user_handler"
@@ -12,7 +13,7 @@ import (
 
 	prserv "avito-reviewer/internal/services/pull_request_services"
 	teamserv "avito-reviewer/internal/services/team_services"
-	"avito-reviewer/internal/services/user_services"
+	userserv "avito-reviewer/internal/services/user_services"
 	"avito-reviewer/pkg/logger"
 	"avito-reviewer/pkg/postgres"
 	"context"
@@ -22,7 +23,6 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/go-chi/chi"
 	"go.uber.org/zap"
 )
 
@@ -43,9 +43,8 @@ func main() {
 		return
 	}
 
-	logger.GetLoggerFromCtx(ctx).Info(ctx, "Successful start!")
+	log.Info(ctx, "Successful start!")
 
-	r := chi.NewRouter()
 	repository := repositories.NewPgxPoolAdapter(DB)
 
 	userRepository := userrepo.NewUserRepository(repository)
@@ -60,21 +59,8 @@ func main() {
 	userHandler := userhand.NewTeamHandler(userServices)
 	prHandler := pull_request_handler.NewPRHandler(prServices)
 
-	r.Route("/team/", func(r chi.Router) {
-		r.Post("/add", teamHandler.AddTeam)
-		r.Get("/get", teamHandler.GetTeam)
-	})
-
-	r.Route("/users/", func(r chi.Router) {
-		r.Post("/setIsActive", userHandler.SetIsActive)
-		r.Get("/getReview", userHandler.GetReview)
-	})
-
-	r.Route("/pullRequest/", func(r chi.Router) {
-		r.Post("/create", prHandler.Create)
-		r.Post("/reassign", prHandler.Reassign)
-		r.Post("/merge", prHandler.Merge)
-	})
+	// Используем общую функцию построения роутера
+	r := build.Router(teamHandler, prHandler, userHandler)
 
 	server := &http.Server{
 		Addr:         ":8080",
