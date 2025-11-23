@@ -1,9 +1,10 @@
-package pull_request_services
+package prserv
 
 import (
 	"avito-reviewer/internal/models"
-	"avito-reviewer/internal/repositories/pull_request_repository"
-	"avito-reviewer/internal/repositories/user_repository"
+	prrepo "avito-reviewer/internal/repositories/pull_request_repository"
+	userrepo "avito-reviewer/internal/repositories/user_repository"
+
 	"context"
 )
 
@@ -14,12 +15,12 @@ type PRService interface {
 }
 
 type prService struct {
-	userRepo user_repository.Repository
+	userRepo userrepo.Repository
 
-	prRepo pull_request_repository.Repository
+	prRepo prrepo.Repository
 }
 
-func NewService(userRepo user_repository.Repository,
-	prRepo pull_request_repository.Repository) PRService {
+func NewService(userRepo userrepo.Repository,
+	prRepo prrepo.Repository) PRService {
 	return &prService{userRepo: userRepo, prRepo: prRepo}
 }

@@ -1,4 +1,4 @@
-package team_handler
+package teamhand
 
 import (
 	"avito-reviewer/internal/handlers"

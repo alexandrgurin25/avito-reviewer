@@ -1,4 +1,4 @@
-package team_services
+package teamserv
 
 import (
 	"avito-reviewer/internal/models"

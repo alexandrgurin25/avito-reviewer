@@ -1,11 +1,11 @@
-package user_repository
+package userrepo
 
 import (
 	"avito-reviewer/internal/repositories"
 	"context"
 )
 
-func (r *userRepository) GetReassignCandidates(
+func (*userRepository) GetReassignCandidates(
 	ctx context.Context,
 	q repositories.QueryExecer,
 	team string,

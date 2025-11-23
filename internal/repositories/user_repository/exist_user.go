@@ -1,4 +1,4 @@
-package user_repository
+package userrepo
 
 import (
 	"avito-reviewer/internal/repositories"
@@ -6,7 +6,7 @@ import (
 	"fmt"
 )
 
-func (r *userRepository) UserExists(ctx context.Context, q repositories.QueryExecer, userID string) (bool, error) {
+func (*userRepository) UserExists(ctx context.Context, q repositories.QueryExecer, userID string) (bool, error) {
 
 	var exists bool
 	err := q.QueryRow(

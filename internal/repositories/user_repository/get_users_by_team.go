@@ -1,4 +1,4 @@
-package user_repository
+package userrepo
 
 import (
 	"avito-reviewer/internal/models"
@@ -6,7 +6,7 @@ import (
 	"context"
 )
 
-func (u *userRepository) GetUsersByTeam(ctx context.Context,
+func (*userRepository) GetUsersByTeam(ctx context.Context,
 	db repositories.QueryExecer, teamID int) (*models.Team, error) {
 
 	rows, err := db.Query(ctx,

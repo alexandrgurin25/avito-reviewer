@@ -1,0 +1,38 @@
+run:
+  timeout: 5m
+  concurrency: 4
+
+output:
+  formats: colored-line-number
+
+linters:
+  enable:
+    - govet
+    - staticcheck
+    - gosimple
+    - unused
+    - gocyclo
+    - gosec
+    - errcheck
+    - revive
+    - stylecheck
+    - prealloc
+    - goconst
+    - misspell
+
+linters-settings:
+  gocyclo:
+    min-complexity: 15
+
+  revive:
+    rules:
+      - name: unused-parameter
+      - name: unused-receiver
+      - name: var-naming
+      - name: indent-error-flow
+
+issues:
+  exclude-rules:
+    - path: _test\.go
+      linters:
+        - errcheck

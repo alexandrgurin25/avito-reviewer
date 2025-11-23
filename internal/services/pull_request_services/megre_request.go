@@ -1,4 +1,4 @@
-package pull_request_services
+package prserv
 
 import (
 	"avito-reviewer/internal/models"
@@ -12,7 +12,7 @@ func (s *prService) MergePR(ctx context.Context, id string) (*models.PullRequest
 	if err != nil {
 		return nil, err
 	}
-	defer tx.Rollback(ctx)
+	defer func() { _ = tx.Rollback(ctx) }()
 
 	// Загружаем PR со всеми ревьюерами
 	pr, err := s.prRepo.GetByID(ctx, tx, id)

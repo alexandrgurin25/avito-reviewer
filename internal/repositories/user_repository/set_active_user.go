@@ -1,4 +1,4 @@
-package user_repository
+package userrepo
 
 import (
 	"avito-reviewer/internal/models"
@@ -6,7 +6,7 @@ import (
 	"context"
 )
 
-func (r *userRepository) SetActive(ctx context.Context, q repositories.QueryExecer, id string, active bool) (*models.User, int, error) {
+func (*userRepository) SetActive(ctx context.Context, q repositories.QueryExecer, id string, active bool) (*models.User, int, error) {
 
 	var user models.User
 

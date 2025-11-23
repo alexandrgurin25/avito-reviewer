@@ -1,4 +1,4 @@
-package pull_request_repository
+package prrepo
 
 import (
 	"avito-reviewer/internal/models"
@@ -8,7 +8,7 @@ import (
 	"github.com/jackc/pgx/v5"
 )
 
-func (r *prRepository) Create(ctx context.Context, q repositories.QueryExecer, pr *models.PullRequest) error {
+func (*prRepository) Create(ctx context.Context, q repositories.QueryExecer, pr *models.PullRequest) error {
 	// Вставляем PR
 	_, err := q.Exec(ctx,
 		`INSERT INTO pull_requests (id, name, author_id, status, created_at)

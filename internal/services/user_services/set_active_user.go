@@ -1,4 +1,4 @@
-package user_services
+package userserv
 
 import (
 	"avito-reviewer/internal/models"
@@ -16,12 +16,12 @@ func (s *userService) SetIsActiveUser(ctx context.Context, u *models.User) (*mod
 		return nil, models.ErrNotFound
 	}
 
-	resp, teamId, err := s.userRepo.SetActive(ctx, s.db, u.ID, u.IsActive)
+	resp, teamID, err := s.userRepo.SetActive(ctx, s.db, u.ID, u.IsActive)
 	if err != nil {
 		return nil, err
 	}
 
-	team, err := s.teamRepo.GetTeamNameById(ctx, s.db, teamId)
+	team, err := s.teamRepo.GetTeamNameByID(ctx, s.db, teamID)
 	if err != nil {
 		return nil, err
 	}

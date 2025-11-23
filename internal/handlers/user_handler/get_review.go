@@ -1,4 +1,4 @@
-package user_handler
+package userhand
 
 import (
 	"avito-reviewer/internal/handlers"

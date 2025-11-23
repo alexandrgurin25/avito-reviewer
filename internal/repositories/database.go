@@ -83,6 +83,6 @@ func (t *PgxTxAdapter) Rollback(ctx context.Context) error {
 	return t.tx.Rollback(ctx)
 }
 
-func (p *PgxTxAdapter) SendBatch(ctx context.Context, b *pgx.Batch) pgx.BatchResults {
-	return p.tx.SendBatch(ctx, b)
+func (t *PgxTxAdapter) SendBatch(ctx context.Context, b *pgx.Batch) pgx.BatchResults {
+	return t.tx.SendBatch(ctx, b)
 }

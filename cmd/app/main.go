@@ -3,14 +3,15 @@ package main
 import (
 	"avito-reviewer/internal/config"
 	pull_request_handler "avito-reviewer/internal/handlers/pullRequest"
-	"avito-reviewer/internal/handlers/team_handler"
-	"avito-reviewer/internal/handlers/user_handler"
+	teamhand "avito-reviewer/internal/handlers/team_handler"
+	userhand "avito-reviewer/internal/handlers/user_handler"
 	"avito-reviewer/internal/repositories"
-	"avito-reviewer/internal/repositories/pull_request_repository"
-	"avito-reviewer/internal/repositories/team_repository"
-	"avito-reviewer/internal/repositories/user_repository"
-	"avito-reviewer/internal/services/pull_request_services"
-	"avito-reviewer/internal/services/team_services"
+	prRepo "avito-reviewer/internal/repositories/pull_request_repository"
+	teamRepo "avito-reviewer/internal/repositories/team_repository"
+	userrepo "avito-reviewer/internal/repositories/user_repository"
+
+	prserv "avito-reviewer/internal/services/pull_request_services"
+	teamserv "avito-reviewer/internal/services/team_services"
 	"avito-reviewer/internal/services/user_services"
 	"avito-reviewer/pkg/logger"
 	"avito-reviewer/pkg/postgres"
@@ -18,7 +19,6 @@ import (
 	"net/http"
 	"os"
 	"os/signal"
-
 	"syscall"
 	"time"
 
@@ -48,16 +48,16 @@ func main() {
 	r := chi.NewRouter()
 	repository := repositories.NewPgxPoolAdapter(DB)
 
-	userRepository := user_repository.NewUserRepository(repository)
-	teamRepository := team_repository.NewTeamRepository(repository)
-	prRepository := pull_request_repository.NewPRRepository(repository)
+	userRepository := userrepo.NewUserRepository(repository)
+	teamRepository := teamRepo.NewTeamRepository(repository)
+	prRepository := prRepo.NewPRRepository(repository)
 
-	teamServices := team_services.NewService(userRepository, teamRepository, repository)
-	userServices := user_services.NewService(userRepository, teamRepository, prRepository, repository)
-	prServices := pull_request_services.NewService(userRepository, prRepository)
+	teamServices := teamserv.NewService(userRepository, teamRepository, repository)
+	userServices := userserv.NewService(userRepository, teamRepository, prRepository, repository)
+	prServices := prserv.NewService(userRepository, prRepository)
 
-	teamHandler := team_handler.NewTeamHandler(teamServices)
-	userHandler := user_handler.NewTeamHandler(userServices)
+	teamHandler := teamhand.NewTeamHandler(teamServices)
+	userHandler := userhand.NewTeamHandler(userServices)
 	prHandler := pull_request_handler.NewPRHandler(prServices)
 
 	r.Route("/team/", func(r chi.Router) {

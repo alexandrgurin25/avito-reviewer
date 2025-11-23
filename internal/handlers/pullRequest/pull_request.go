@@ -1,13 +1,13 @@
-package pull_request_handler
+package prhand
 
 import (
 	"avito-reviewer/internal/services/pull_request_services"
 )
 
 type PRHandler struct {
-	s pull_request_services.PRService
+	s prserv.PRService
 }
 
-func NewPRHandler(s pull_request_services.PRService) *PRHandler {
+func NewPRHandler(s prserv.PRService) *PRHandler {
 	return &PRHandler{s: s}
 }

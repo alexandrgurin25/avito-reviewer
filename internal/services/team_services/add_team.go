@@ -1,4 +1,4 @@
-package team_services
+package teamserv
 
 import (
 	"avito-reviewer/internal/models"
@@ -13,7 +13,7 @@ func (s teamService) AddTeam(ctx context.Context, t *models.Team) (*models.Team,
 		return nil, err
 	}
 
-	defer tx.Rollback(ctx)
+	defer func() { _ = tx.Rollback(ctx) }()
 
 	//Проверка, что такой команды еще нет
 	hasTeam, err := s.teamRepo.TeamExists(ctx, tx, t.Name)

@@ -1,4 +1,4 @@
-package pull_request_services
+package prserv
 
 import (
 	"avito-reviewer/internal/models"
@@ -6,13 +6,14 @@ import (
 	"math/rand"
 )
 
+//nolint:gocyclo
 func (s *prService) ReassignReviewer(ctx context.Context, reasign *models.ReasignPR) (*models.PullRequest, string, error) {
 
 	tx, err := s.prRepo.BeginTx(ctx)
 	if err != nil {
 		return nil, "", err
 	}
-	defer tx.Rollback(ctx)
+	defer func() { _ = tx.Rollback(ctx) }()
 
 	// Проверить, что старый ревьювер существует
 	hasUser, err := s.userRepo.UserExists(ctx, tx, reasign.OldReviewerID)
@@ -75,6 +76,7 @@ func (s *prService) ReassignReviewer(ctx context.Context, reasign *models.Reasig
 		return nil, "", models.ErrNoCandidate
 	}
 
+	//nolint:gosec
 	newReviewer := candidates[rand.Intn(len(candidates))] // Выбираем одного случайно
 
 	for i := range pr.Reviewers {

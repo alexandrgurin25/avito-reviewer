@@ -1,11 +1,11 @@
-package user_repository
+package userrepo
 
 import (
 	"avito-reviewer/internal/repositories"
 	"context"
 )
 
-func (r *userRepository) GetRandomReviewers(ctx context.Context, q repositories.QueryExecer, teamID, exclude string) ([]string, error) {
+func (*userRepository) GetRandomReviewers(ctx context.Context, q repositories.QueryExecer, teamID, exclude string) ([]string, error) {
 	rows, err := q.Query(ctx,
 		`SELECT id
          FROM users

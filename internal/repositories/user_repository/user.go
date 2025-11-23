@@ -1,4 +1,4 @@
-package user_repository
+package userrepo
 
 import (
 	"avito-reviewer/internal/models"

@@ -1,4 +1,4 @@
-package user_repository
+package userrepo
 
 import (
 	"avito-reviewer/internal/models"
@@ -6,7 +6,7 @@ import (
 	"context"
 )
 
-func (r *userRepository) GetByID(ctx context.Context, q repositories.QueryExecer, id string) (*models.User, error) {
+func (*userRepository) GetByID(ctx context.Context, q repositories.QueryExecer, id string) (*models.User, error) {
 	var u models.User
 	err := q.QueryRow(ctx,
 		`SELECT id, username, team_id, is_active
