@@ -8,7 +8,7 @@ type TeamRequest struct {
 type TeamMemberDTO struct {
 	UserID   string `json:"user_id"`
 	Username string `json:"username"`
-	TeamName string `json:"team_name"`
+	TeamName string `json:"team_name,omitempty"`
 	IsActive bool   `json:"is_active"`
 }
 
@@ -35,4 +35,19 @@ type MergePRRequest struct {
 type ReassignPRRequest struct {
 	PRID        string `json:"pull_request_id"`
 	OldReviewer string `json:"old_user_id"`
+}
+
+type PullRequestDTO struct {
+	ID                string   `json:"pull_request_id"`
+	Name              string   `json:"pull_request_name"`
+	AuthorID          string   `json:"author_id"`
+	Status            string   `json:"status"`
+	AssignedReviewers []string `json:"assigned_reviewers,omitempty"`
+	CreatedAt         *string  `json:"createdAt,omitempty"`
+	MergedAt          *string  `json:"mergedAt,omitempty"`
+}
+
+type GetReviewDTO struct {
+	UserID       string           `json:"user_id"`
+	PullRequests []PullRequestDTO `json:"pull_requests"`
 }

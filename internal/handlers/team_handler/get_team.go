@@ -13,10 +13,11 @@ func (h *TeamHandler) GetTeam(w http.ResponseWriter, r *http.Request) {
 
 	teamName := r.URL.Query().Get("team_name")
 
-	if teamName == "" {
-		handlers.WriteBadRequest(w, r, "empty query parameters")
-		return
-	}
+	// По API не требовалось обрабатывать  
+	// if teamName == "" {
+	// 	handlers.WriteBadRequest(w, r, "empty query parameters")
+	// 	return
+	// }
 
 	foundTeam, err := h.s.GetTeam(ctx, teamName)
 

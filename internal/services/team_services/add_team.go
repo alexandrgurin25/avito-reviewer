@@ -65,7 +65,9 @@ func (s teamService) AddTeam(ctx context.Context, t *models.Team) (*models.Team,
 		return nil, err
 	}
 
-	tx.Commit(ctx)
+	if err := tx.Commit(ctx); err != nil {
+		return nil, err
+	}
 
 	createdTeam.Members = createdUsers.Members
 

@@ -12,11 +12,13 @@ CREATE TABLE users (
 );
 
 
+CREATE TYPE pr_status AS ENUM ('OPEN', 'MERGED');
+
 CREATE TABLE pull_requests (
     id             TEXT PRIMARY KEY,
     name           TEXT NOT NULL,
     author_id      TEXT NOT NULL REFERENCES users(id) ON DELETE RESTRICT,
-    status         TEXT NOT NULL CHECK (status IN ('OPEN', 'MERGED')),
+    status         pr_status NOT NULL,
     created_at     TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     merged_at      TIMESTAMPTZ
 );

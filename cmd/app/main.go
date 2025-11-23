@@ -2,11 +2,14 @@ package main
 
 import (
 	"avito-reviewer/internal/config"
+	pull_request_handler "avito-reviewer/internal/handlers/pullRequest"
 	"avito-reviewer/internal/handlers/team_handler"
 	"avito-reviewer/internal/handlers/user_handler"
 	"avito-reviewer/internal/repositories"
+	"avito-reviewer/internal/repositories/pull_request_repository"
 	"avito-reviewer/internal/repositories/team_repository"
 	"avito-reviewer/internal/repositories/user_repository"
+	"avito-reviewer/internal/services/pull_request_services"
 	"avito-reviewer/internal/services/team_services"
 	"avito-reviewer/internal/services/user_services"
 	"avito-reviewer/pkg/logger"
@@ -47,21 +50,29 @@ func main() {
 
 	userRepository := user_repository.NewUserRepository(repository)
 	teamRepository := team_repository.NewTeamRepository(repository)
+	prRepository := pull_request_repository.NewPRRepository(repository)
 
 	teamServices := team_services.NewService(userRepository, teamRepository, repository)
-	userServices := user_services.NewService(userRepository, teamRepository, repository)
+	userServices := user_services.NewService(userRepository, teamRepository, prRepository, repository)
+	prServices := pull_request_services.NewService(userRepository, prRepository)
 
 	teamHandler := team_handler.NewTeamHandler(teamServices)
 	userHandler := user_handler.NewTeamHandler(userServices)
+	prHandler := pull_request_handler.NewPRHandler(prServices)
 
 	r.Route("/team/", func(r chi.Router) {
-		r.Post("/add/", teamHandler.AddTeam)
-		r.Get("/get/", teamHandler.GetTeam)
+		r.Post("/add", teamHandler.AddTeam)
+		r.Get("/get", teamHandler.GetTeam)
 	})
 
 	r.Route("/users/", func(r chi.Router) {
-		r.Post("/setIsActive/", userHandler.SetIsActive)
-		// r.Get("/get/", teamHandler.GetTeam)
+		r.Post("/setIsActive", userHandler.SetIsActive)
+		r.Get("/getReview", userHandler.GetReview)
+	})
+
+	r.Route("/pullRequest/", func(r chi.Router) {
+		r.Post("/create", prHandler.Create)
+		r.Post("/merge", prHandler.Merge)
 	})
 
 	server := &http.Server{

@@ -5,7 +5,6 @@ import (
 	"avito-reviewer/pkg/logger"
 	"encoding/json"
 	"net/http"
-	"strings"
 
 	"go.uber.org/zap"
 )
@@ -84,12 +83,9 @@ func WriteDomainError(w http.ResponseWriter, r *http.Request, err error) {
 		writeAPIError(w, r, "NOT_FOUND", err.Error(), http.StatusNotFound)
 	case models.ErrUserBelongsToAnotherTeam:
 		writeAPIError(w, r, "USER_EXISTS", err.Error(), http.StatusBadRequest)
+	case models.ErrTeamExists:
+		writeAPIError(w, r, "TEAM_EXISTS", err.Error(), http.StatusBadRequest)
 	default:
-		if strings.HasSuffix(err.Error(), models.ErrTeamExists.Error()) {
-			writeAPIError(w, r, "TEAM_EXISTS", err.Error(), http.StatusBadRequest)
-			return
-		}
-
 		writeAPIError(w, r, "INTERNAL_ERROR", err.Error(), http.StatusInternalServerError)
 	}
 }

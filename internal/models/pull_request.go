@@ -18,3 +18,8 @@ type PullRequest struct {
 	MergedAt  *time.Time
 	Reviewers []string
 }
+
+type UserPR struct {
+	ID           string
+	PullRequests []PullRequest
+}

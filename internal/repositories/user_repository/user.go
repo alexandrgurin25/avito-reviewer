@@ -12,6 +12,9 @@ type Repository interface {
 	GetExistingUsers(ctx context.Context, db repositories.QueryExecer, ids []string) (map[string]string, error)
 	SetActive(ctx context.Context, q repositories.QueryExecer, id string, active bool) (*models.User, int, error)
 	UserExists(ctx context.Context, q repositories.QueryExecer, userID string) (bool, error)
+	GetByID(ctx context.Context, q repositories.QueryExecer, id string) (*models.User, error)
+
+	GetRandomReviewers(ctx context.Context, q repositories.QueryExecer, team, exclude string) ([]string, error)
 }
 
 type userRepository struct {

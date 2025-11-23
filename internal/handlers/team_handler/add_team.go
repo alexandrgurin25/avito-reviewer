@@ -12,12 +12,14 @@ import (
 func (h *TeamHandler) AddTeam(w http.ResponseWriter, r *http.Request) {
 	var req dto.TeamResponse
 	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
-		handlers.WriteBadRequest(w, r, "invalid json")
+		// не предусмотен такой ответ по API, поэтому убрал
+		// handlers.WriteBadRequest(w, r, "invalid json")
 		return
 	}
 
 	if req.TeamName == "" || len(req.Members) == 0 {
-		handlers.WriteBadRequest(w, r, "invalid json")
+		// не предусмотен такой ответ по API, поэтому убрал
+		// handlers.WriteBadRequest(w, r, "invalid json")
 		return
 	}
 

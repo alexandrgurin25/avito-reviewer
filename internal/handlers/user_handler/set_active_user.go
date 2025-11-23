@@ -11,7 +11,8 @@ import (
 func (h *UserHandler) SetIsActive(w http.ResponseWriter, r *http.Request) {
 	var req dto.TeamMemberDTO
 	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
-		handlers.WriteBadRequest(w, r, "invalid json")
+		// не предусмотен такой ответ по API, поэтому убрал
+		// handlers.WriteBadRequest(w, r, "invalid json")
 		return
 	}
 
