@@ -37,6 +37,11 @@ type ReassignPRRequest struct {
 	OldReviewer string `json:"old_user_id"`
 }
 
+type ReassignPRResponse struct {
+	PR         PullRequestDTO `json:"pr"`
+	ReplacedBy string         `json:"replaced_by"`
+}
+
 type PullRequestDTO struct {
 	ID                string   `json:"pull_request_id"`
 	Name              string   `json:"pull_request_name"`

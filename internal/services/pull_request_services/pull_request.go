@@ -10,6 +10,7 @@ import (
 type PRService interface {
 	CreatePullRequest(ctx context.Context, pr *models.PullRequest) (*models.PullRequest, error)
 	MergePR(ctx context.Context, id string) (*models.PullRequest, error)
+	ReassignReviewer(ctx context.Context, pr *models.ReasignPR) (*models.PullRequest, string, error)
 }
 
 type prService struct {

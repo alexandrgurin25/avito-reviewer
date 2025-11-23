@@ -15,6 +15,8 @@ type Repository interface {
 	GetByID(ctx context.Context, q repositories.QueryExecer, id string) (*models.User, error)
 
 	GetRandomReviewers(ctx context.Context, q repositories.QueryExecer, team, exclude string) ([]string, error)
+	GetReassignCandidates(ctx context.Context, q repositories.QueryExecer,
+		team string, assigned []string, oldUser string, author string) ([]string, error)
 }
 
 type userRepository struct {

@@ -12,8 +12,8 @@ func (h *PRHandler) Create(w http.ResponseWriter, r *http.Request) {
 	var req dto.CreatePRRequest
 
 	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
-		// не предусмотен такой ответ по API, поэтому убрал
-		// handlers.WriteBadRequest(w, r, "invalid json")
+		// не предусмотен такой ответ по API, но оставил для корректного ответа
+		handlers.WriteBadRequest(w, r, "invalid json")
 		return
 	}
 

@@ -15,6 +15,7 @@ type Repository interface {
 	SetStatusOnMerged(ctx context.Context, q repositories.QueryExecer, id string, mergedAt time.Time) error
 	GetIDByReviewerId(ctx context.Context, q repositories.QueryExecer, userID string) ([]string, error)
 	GetPRsById(ctx context.Context, db repositories.QueryExecer, ids []string) ([]models.PullRequest, error)
+	ReplaceReviewer(ctx context.Context, q repositories.QueryExecer, prID, oldID, newID string) error
 }
 
 type prRepository struct {

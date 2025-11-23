@@ -23,3 +23,8 @@ type UserPR struct {
 	ID           string
 	PullRequests []PullRequest
 }
+
+type ReasignPR struct {
+	PRID          string
+	OldReviewerID string
+}

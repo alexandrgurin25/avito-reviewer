@@ -72,6 +72,7 @@ func main() {
 
 	r.Route("/pullRequest/", func(r chi.Router) {
 		r.Post("/create", prHandler.Create)
+		r.Post("/reassign", prHandler.Reassign)
 		r.Post("/merge", prHandler.Merge)
 	})
 
