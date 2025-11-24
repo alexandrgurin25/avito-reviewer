@@ -16,6 +16,7 @@ type Repository interface {
 	GetIDByReviewerID(ctx context.Context, q repositories.QueryExecer, userID string) ([]string, error)
 	GetPRsByID(ctx context.Context, db repositories.QueryExecer, ids []string) ([]models.PullRequest, error)
 	ReplaceReviewer(ctx context.Context, q repositories.QueryExecer, prID, oldID, newID string) error
+	GetReviewerStats(ctx context.Context, db repositories.QueryExecer) (map[string]int, error)
 }
 
 type prRepository struct {

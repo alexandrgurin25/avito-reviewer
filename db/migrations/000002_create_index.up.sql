@@ -5,3 +5,6 @@ CREATE INDEX idx_pr_status ON pull_requests(status);
 
 CREATE INDEX idx_users_team_id ON users(team_id);
 CREATE INDEX idx_teams_name ON teams(name);
+
+CREATE INDEX idx_users_team_active ON users(team_id, is_active) WHERE is_active = true;
+CREATE INDEX idx_pr_reviewers_pr_id ON pull_request_reviewers(pr_id);

@@ -1,7 +1,6 @@
 package e2e_test
 
 import (
-	"avito-reviewer/internal/config"
 	build "avito-reviewer/internal/handlers/build_router"
 	prhand "avito-reviewer/internal/handlers/pullRequest"
 	teamhand "avito-reviewer/internal/handlers/team_handler"
@@ -14,7 +13,7 @@ import (
 	teamserv "avito-reviewer/internal/services/team_services"
 	userserv "avito-reviewer/internal/services/user_services"
 	"avito-reviewer/pkg/postgres"
-	"time"
+	"avito-reviewer/tests/integration/testutils"
 
 	"context"
 	"net/http"
@@ -22,59 +21,21 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/jackc/pgx/v5/pgxpool"
 	"github.com/stretchr/testify/require"
-
-	p "github.com/testcontainers/testcontainers-go/modules/postgres"
 )
 
 func TestCreatePullRequest(t *testing.T) {
 	ctx := context.Background()
 
-	// 1) Поднимаем PostgreSQL
-	pg, err := p.Run(ctx,
-		"postgres:17",
-		p.WithDatabase("testdb"),
-		p.WithUsername("postgres"),
-		p.WithPassword("postgres"),
-	)
+	// запуск тестовой базы
+	env, err := testutils.StartPostgres(ctx)
 	require.NoError(t, err)
-	defer pg.Terminate(ctx)
+	defer env.Container.Terminate(ctx)
 
-	// Даем время PostgreSQL полностью запуститься
-	time.Sleep(5 * time.Second)
-
-	host, err := pg.Host(ctx)
+	pool, err := postgres.NewTest(ctx, env.Cfg, "file://../../../db/migrations")
 	require.NoError(t, err)
 
-	port, err := pg.MappedPort(ctx, "5432")
-	require.NoError(t, err)
-
-	// Преобразуем порт в uint16
-	portUint16 := uint16(port.Int())
-
-	cfg := &config.Config{
-		Host:     host,
-		Port:     portUint16,
-		Username: "postgres",
-		Password: "postgres",
-		Database: "testdb",
-		MaxConns: 10,
-		MinConns: 1,
-	}
-
-	// Добавляем retry для подключения к БД
-	var db *pgxpool.Pool
-	for i := 0; i < 10; i++ {
-		db, err = postgres.NewTest(ctx, cfg, "file://../../db/migrations")
-		if err == nil {
-			break
-		}
-		time.Sleep(1 * time.Second)
-	}
-	require.NoError(t, err)
-	// Остальной код без изменений...
-	repository := repositories.NewPgxPoolAdapter(db)
+	repository := repositories.NewPgxPoolAdapter(pool)
 
 	userRepo := userrepo.NewUserRepository(repository)
 	teamRepo := teamrepo.NewTeamRepository(repository)
@@ -82,7 +43,7 @@ func TestCreatePullRequest(t *testing.T) {
 
 	userSrv := userserv.NewService(userRepo, teamRepo, prRepo, repository)
 	teamSrv := teamserv.NewService(userRepo, teamRepo, repository)
-	prSrv := prserv.NewService(userRepo, prRepo)
+	prSrv := prserv.NewService(userRepo, prRepo, repository)
 
 	teamHandler := teamhand.NewTeamHandler(teamSrv)
 	prHandler := prhand.NewPRHandler(prSrv)

@@ -11,6 +11,12 @@ func (h *UserHandler) GetReview(w http.ResponseWriter, r *http.Request) {
 
 	userID := r.URL.Query().Get("user_id")
 
+	// В спецификации параметр user_id обязателен, поэтому добавил обработку, которая явна не прописана
+	if userID == "" {
+		handlers.WriteBadRequest(w, r, "user_id parameter is required")
+		return
+	}
+
 	reviewers, err := h.s.GetReview(r.Context(), userID)
 
 	if err != nil {

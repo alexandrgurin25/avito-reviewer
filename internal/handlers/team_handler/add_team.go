@@ -30,8 +30,10 @@ func (h *TeamHandler) AddTeam(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	handlers.WriteJSON(w, r, http.StatusCreated, dto.TeamResponse{
-		TeamName: created.Name,
-		Members:  mappers.MapUsersToDTO(created.Members),
+	handlers.WriteJSON(w, r, http.StatusCreated, map[string]any{
+		"team": dto.TeamResponse{
+			TeamName: created.Name,
+			Members:  mappers.MapUsersToDTO(created.Members),
+		},
 	})
 }

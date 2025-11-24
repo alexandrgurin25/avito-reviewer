@@ -1,6 +1,6 @@
 package dto
 
-type TeamRequest struct {
+type Team struct {
 	TeamName string          `json:"team_name"`
 	Members  []TeamMemberDTO `json:"members"`
 }

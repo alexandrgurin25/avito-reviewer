@@ -53,7 +53,7 @@ func main() {
 
 	teamServices := teamserv.NewService(userRepository, teamRepository, repository)
 	userServices := userserv.NewService(userRepository, teamRepository, prRepository, repository)
-	prServices := prserv.NewService(userRepository, prRepository)
+	prServices := prserv.NewService(userRepository, prRepository, repository)
 
 	teamHandler := teamhand.NewTeamHandler(teamServices)
 	userHandler := userhand.NewTeamHandler(userServices)

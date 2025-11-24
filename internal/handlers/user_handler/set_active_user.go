@@ -29,10 +29,12 @@ func (h *UserHandler) SetIsActive(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	handlers.WriteJSON(w, r, http.StatusOK, dto.TeamMemberDTO{
-		UserID:   updated.ID,
-		Username: updated.Username,
-		TeamName: updated.TeamName,
-		IsActive: updated.IsActive,
+	handlers.WriteJSON(w, r, http.StatusOK, map[string]any{
+		"user": dto.TeamMemberDTO{
+			UserID:   updated.ID,
+			Username: updated.Username,
+			TeamName: updated.TeamName,
+			IsActive: updated.IsActive,
+		},
 	})
 }
