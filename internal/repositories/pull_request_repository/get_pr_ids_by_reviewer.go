@@ -1,11 +1,11 @@
-package pull_request_repository
+package prrepo
 
 import (
 	"avito-reviewer/internal/repositories"
 	"context"
 )
 
-func (r *prRepository) GetIDByReviewerId(ctx context.Context, q repositories.QueryExecer, userID string) ([]string, error) {
+func (*prRepository) GetIDByReviewerID(ctx context.Context, q repositories.QueryExecer, userID string) ([]string, error) {
 
 	// Подтянем id ревью
 	rows, err := q.Query(ctx,

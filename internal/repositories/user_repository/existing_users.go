@@ -1,11 +1,11 @@
-package user_repository
+package userrepo
 
 import (
 	"avito-reviewer/internal/repositories"
 	"context"
 )
 
-func (u *userRepository) GetExistingUsers(ctx context.Context,
+func (*userRepository) GetExistingUsers(ctx context.Context,
 	db repositories.QueryExecer, ids []string) (map[string]string, error) {
 
 	rows, err := db.Query(ctx,

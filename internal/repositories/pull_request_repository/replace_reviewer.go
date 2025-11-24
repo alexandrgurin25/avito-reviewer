@@ -1,4 +1,4 @@
-package pull_request_repository
+package prrepo
 
 import (
 	"avito-reviewer/internal/models"
@@ -6,7 +6,7 @@ import (
 	"context"
 )
 
-func (r *prRepository) ReplaceReviewer(ctx context.Context, q repositories.QueryExecer, prID, oldID, newID string) error {
+func (*prRepository) ReplaceReviewer(ctx context.Context, q repositories.QueryExecer, prID, oldID, newID string) error {
 	tag, err := q.Exec(ctx,
 		`UPDATE pull_request_reviewers
          SET reviewer_id = $1

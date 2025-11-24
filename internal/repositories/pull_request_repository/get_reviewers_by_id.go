@@ -1,4 +1,4 @@
-package pull_request_repository
+package prrepo
 
 import (
 	"avito-reviewer/internal/models"
@@ -7,7 +7,7 @@ import (
 	"time"
 )
 
-func (r *prRepository) GetByID(ctx context.Context, q repositories.QueryExecer, id string) (*models.PullRequest, error) {
+func (*prRepository) GetByID(ctx context.Context, q repositories.QueryExecer, id string) (*models.PullRequest, error) {
 	var pr models.PullRequest
 	var mergedAt *time.Time
 

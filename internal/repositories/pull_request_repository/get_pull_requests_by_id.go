@@ -1,4 +1,4 @@
-package pull_request_repository
+package prrepo
 
 import (
 	"avito-reviewer/internal/models"
@@ -6,7 +6,7 @@ import (
 	"context"
 )
 
-func (u *prRepository) GetPRsById(ctx context.Context,
+func (*prRepository) GetPRsByID(ctx context.Context,
 	db repositories.QueryExecer, ids []string) ([]models.PullRequest, error) {
 
 	rows, err := db.Query(ctx,

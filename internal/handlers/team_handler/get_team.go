@@ -1,4 +1,4 @@
-package team_handler
+package teamhand
 
 import (
 	"avito-reviewer/internal/handlers"
@@ -13,11 +13,11 @@ func (h *TeamHandler) GetTeam(w http.ResponseWriter, r *http.Request) {
 
 	teamName := r.URL.Query().Get("team_name")
 
-	// По API не требовалось обрабатывать  
-	// if teamName == "" {
-	// 	handlers.WriteBadRequest(w, r, "empty query parameters")
-	// 	return
-	// }
+	// В спецификации параметр team_name обязателен, поэтому добавил обработку, которая явна не прописана
+	if teamName == "" {
+		handlers.WriteBadRequest(w, r, "team_name parameter is required")
+		return
+	}
 
 	foundTeam, err := h.s.GetTeam(ctx, teamName)
 

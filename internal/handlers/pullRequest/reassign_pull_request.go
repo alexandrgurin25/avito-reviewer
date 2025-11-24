@@ -1,4 +1,4 @@
-package pull_request_handler
+package prhand
 
 import (
 	"avito-reviewer/internal/handlers"
@@ -13,7 +13,8 @@ func (h *PRHandler) Reassign(w http.ResponseWriter, r *http.Request) {
 	var req dto.ReassignPRRequest
 
 	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
-		// не предусмотен такой ответ по API, но оставил для корректного ответа
+		// Этот ответ не предусмотрен API,
+		// но оставлен для обеспечения корректной работы.
 		handlers.WriteBadRequest(w, r, "invalid json")
 		return
 	}

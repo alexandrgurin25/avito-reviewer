@@ -7,7 +7,7 @@ import (
 )
 
 const (
-	RequestId = "request_id"
+	RequestID = "request_id"
 )
 
 // Обертка для работы с контекстом
@@ -51,13 +51,13 @@ func loggerFromContext(ctx context.Context) *Logger {
 	return nil
 }
 
-func (l *Logger) addContextFields(ctx context.Context, fields []zap.Field) []zap.Field {
+func (*Logger) addContextFields(ctx context.Context, fields []zap.Field) []zap.Field {
 	if ctx == nil {
 		return fields
 	}
 
-	if requestId, ok := ctx.Value(RequestId).(string); ok && requestId != "" {
-		fields = append(fields, zap.String("request_id", requestId))
+	if requestID, ok := ctx.Value(RequestID).(string); ok && requestID != "" {
+		fields = append(fields, zap.String("request_id", requestID))
 	}
 
 	return fields

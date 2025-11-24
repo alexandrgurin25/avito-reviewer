@@ -1,4 +1,4 @@
-package team_repository
+package teamrepo
 
 import (
 	"avito-reviewer/internal/repositories"
@@ -6,7 +6,7 @@ import (
 	"fmt"
 )
 
-func (r *teamRepository) TeamExists(ctx context.Context, q repositories.QueryExecer, name string) (bool, error) {
+func (*teamRepository) TeamExists(ctx context.Context, q repositories.QueryExecer, name string) (bool, error) {
 
 	var exists bool
 	err := q.QueryRow(

@@ -1,4 +1,4 @@
-package pull_request_services
+package prserv
 
 import (
 	"avito-reviewer/internal/models"
@@ -12,7 +12,7 @@ func (s *prService) CreatePullRequest(ctx context.Context, pr *models.PullReques
 	if err != nil {
 		return nil, err
 	}
-	defer tx.Rollback(ctx)
+	defer func() { _ = tx.Rollback(ctx) }()
 
 	// Проверить существует ли такой пользователь
 	hasUser, err := s.userRepo.UserExists(ctx, tx, pr.AuthorID)

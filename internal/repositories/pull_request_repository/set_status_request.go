@@ -1,4 +1,4 @@
-package pull_request_repository
+package prrepo
 
 import (
 	"avito-reviewer/internal/models"
@@ -7,7 +7,7 @@ import (
 	"time"
 )
 
-func (r *prRepository) SetStatusOnMerged(ctx context.Context, q repositories.QueryExecer, id string, mergedAt time.Time) error {
+func (*prRepository) SetStatusOnMerged(ctx context.Context, q repositories.QueryExecer, id string, mergedAt time.Time) error {
 	tag, err := q.Exec(ctx,
 		`UPDATE pull_requests
          SET status = 'MERGED', merged_at = $1

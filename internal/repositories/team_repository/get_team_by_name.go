@@ -1,4 +1,4 @@
-package team_repository
+package teamrepo
 
 import (
 	"avito-reviewer/internal/models"
@@ -7,7 +7,7 @@ import (
 	"fmt"
 )
 
-func (r *teamRepository) GetTeamIDByName(ctx context.Context, q repositories.QueryExecer, name string) (*models.Team, error) {
+func (*teamRepository) GetTeamIDByName(ctx context.Context, q repositories.QueryExecer, name string) (*models.Team, error) {
 
 	var res models.Team
 	err := q.QueryRow(

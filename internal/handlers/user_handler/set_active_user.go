@@ -1,4 +1,4 @@
-package user_handler
+package userhand
 
 import (
 	"avito-reviewer/internal/handlers"
@@ -11,7 +11,8 @@ import (
 func (h *UserHandler) SetIsActive(w http.ResponseWriter, r *http.Request) {
 	var req dto.TeamMemberDTO
 	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
-		// не предусмотен такой ответ по API, но оставил для корректного ответа
+		// Этот ответ не предусмотрен API,
+		// но оставлен для обеспечения корректной работы.
 		handlers.WriteBadRequest(w, r, "invalid json")
 		return
 	}
@@ -28,10 +29,12 @@ func (h *UserHandler) SetIsActive(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	handlers.WriteJSON(w, r, http.StatusOK, dto.TeamMemberDTO{
-		UserID:   updated.ID,
-		Username: updated.Username,
-		TeamName: updated.TeamName,
-		IsActive: updated.IsActive,
+	handlers.WriteJSON(w, r, http.StatusOK, map[string]any{
+		"user": dto.TeamMemberDTO{
+			UserID:   updated.ID,
+			Username: updated.Username,
+			TeamName: updated.TeamName,
+			IsActive: updated.IsActive,
+		},
 	})
 }

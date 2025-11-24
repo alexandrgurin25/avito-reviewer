@@ -1,4 +1,4 @@
-package user_repository
+package userrepo
 
 import (
 	"avito-reviewer/internal/models"
@@ -8,7 +8,7 @@ import (
 	"github.com/jackc/pgx/v5"
 )
 
-func (u *userRepository) UpsertUsers(ctx context.Context, q repositories.QueryExecer, t *models.Team) (*models.Team, error) {
+func (*userRepository) UpsertUsers(ctx context.Context, q repositories.QueryExecer, t *models.Team) (*models.Team, error) {
 	var res models.Team
 
 	batch := &pgx.Batch{}

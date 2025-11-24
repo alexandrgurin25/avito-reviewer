@@ -1,4 +1,4 @@
-package team_repository
+package teamrepo
 
 import (
 	"avito-reviewer/internal/models"
@@ -10,7 +10,7 @@ type Repository interface {
 	BeginTx(ctx context.Context) (repositories.Tx, error)
 
 	GetTeamIDByName(ctx context.Context, q repositories.QueryExecer, name string) (*models.Team, error)
-	GetTeamNameById(ctx context.Context, q repositories.QueryExecer, id int) (*models.Team, error)
+	GetTeamNameByID(ctx context.Context, q repositories.QueryExecer, id int) (*models.Team, error)
 
 	TeamExists(ctx context.Context, q repositories.QueryExecer, name string) (bool, error)
 	CreateTeam(ctx context.Context, q repositories.QueryExecer, name string) (*models.Team, error)
